@@ -8,9 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     DataBaseHelper myDb;
+    EditText editName;
+    EditText editLastName;
+    EditText editMarks;
+    Button addData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         myDb = new DataBaseHelper(this);
+
+        editName = (EditText).findViewById(R.id.editText_Name);
+        editLastName = (EditText).findViewById(R.id.editText_LastName);
+        editMarks = (EditText).findViewById(R.id.editText_Marks);
+        addData = (Button).findViewById(R.id.button_add);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -27,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void AddData(){
+        addData.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean isInsert = myDb.insertData(editName.getText().toString(),editLastName.getText().toString(),editMarks.getText().toString());
+                    }
+                }
+        );
     }
 
     @Override
